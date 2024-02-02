@@ -340,5 +340,295 @@ Note: An average score can be a decimal</p>
 <li><strong>AND</strong> no <code>last_meeting</code> date <strong>OR</strong> more than a month</li>
 </ul></li>
 </ul>
+</div>
+</div>
+</div>
+</div>
+
+<h2>NOTES</h2>
+<h3>MSQL CHEETSHEET</h3>
+browing your database
+<pre>
+SHOW DATABASES;
+SHOW TABLES # for viewing tables in a database
+SHOW FIELDS FROM table_name / DESCRIBE table; # for viewing columns in a table
+SHOW CREATE TABLE table_name; # for viewing the CREATE TABLE statement
+SHOW INDEX FROM table_name; # for viewing indexes in a table
+SHOW PROCESSLIST; # for viewing active connections
+SHOW STATUS; # for viewing global status
+KILL process_number; # for killing a connection
+</pre>
+
+Selecting
+<pre>
+SELECT * FROM table; # for selecting all rows from a table
+SELECT * FROM table1, table2; # for selecting rows from multiple tables
+
+SELECT field1, field2 FROM table1, table2; # for selecting specific columns from multiple tables
+SELECT field1, field2 FROM table1, table2 WHERE condition; # for selecting specific columns from multiple tables
+
+SELECT ... FROM ... WHERE condition # for selecting rows from a table that meet a certain condition
+
+SELECT ... FROM ... WHERE condition AND condition2; # for selecting rows from a table that meet multiple conditions
+SELECT ... FROM ... WHERE condition OR condition2; # for selecting rows from a table that meet at least one of the conditions
+SELECT ... FROM ... WHERE condition GROUP BY field; # for grouping rows from a table
+SELECT ... FROM ... WHERE condition GROUP BY field HAVING condition2; # for grouping rows from a table and then selecting only the rows that meet a certain condition
+SELECT ... FROM ... WHERE condition ORDER BY field1, field2; # for ordering rows from a table
+SELECT ... FROM ... WHERE condition ORDER BY field1, field2 DESC; # for ordering rows from a table in descending order
+SELECT ... FROM ... WHERE condition LIMIT 10; # for limiting the number of rows returned
+SELECT DISTINCT field1 FROM ...; # for selecting only distinct values from a table
+SELECT DISTINCT field1, field2 FROM ...; # for selecting only distinct values from a table
+</pre>
+<b> SELECT JOIN </b>
+<pre>
+SELECT * FROM table1 JOIN table2 ON condition; # for selecting rows from multiple tables
+SELECT * FROM table1 LEFT JOIN table2 ON condition; # for selecting rows from multiple tables and including rows from table2 that don&rsquo;t have a match in table1
+SELECT ... FROM t1 JOIN t2 ON t1.id1 = t2.id2 WHERE condition; # for selecting rows from multiple tables and including rows from table2 that don&rsquo;t have a match in table1
+SELECT ... FROM t1 LEFT JOIN t2 ON t1.id1 = t2.id2 WHERE condition; # for selecting rows from multiple tables and including rows from table2 that don&rsquo;t have a match in table1
+SELECT ... FROM t1 JOIN (t2 JOIN t3 ON ...) ON ... # for selecting rows from multiple tables and including rows from table2 that don&rsquo;t have a match in table1
+</pre>
+<b> CONDITONS </b>
+<pre>
+field1 = value1 # for selecting rows where field1 is equal to value1
+field1 <> value1 # for selecting rows where field1 is not equal to value1
+field1 LIKE 'value _ %' # for selecting rows where field1 matches a certain pattern
+field1 IS NULL # for selecting rows where field1 is null
+field1 IS NOT NULL # for selecting rows where field1 is not null
+
+field1 IS IN (value1, value2) # for selecting rows where field1 is equal to value1 or value2
+field1 IS NOT IN (value1, value2) # for selecting rows where field1 is not equal to value1 or value2
+condition1 AND condition2 # for selecting rows where condition1 AND condition2
+condition1 OR condition2 # for selecting rows where condition1 OR condition2
+</pre>
+
+<b> CREATE / OPEN DELETE DATABASE </b>
+<pre>
+CREATE DATABASE DatabaseName; # for creating a database
+CREATE DATABASE DatabaseName CHARACTER SET utf8; # for creating a database with a specific character set
+USE DatabaseName; # for opening a database
+DROP DATABASE DatabaseName; # for deleting a database
+ALTER DATABASE DatabaseName CHARACTER SET utf8; # for changing the character set of a database
+</pre>
+DELETE
+<pre> 
+DELETE FROM table1 / TRUNCATE table1;
+# for deleting all rows from a table
+DELETE FROM table1 WHERE condition; # for deleting rows from a table that meet a certain condition
+DELETE FROM table1, table2 WHERE table1.id1 = table2.id2 AND condition; # for deleting rows from multiple tables that meet a certain condition
+</pre>
+UPDATES
+<pre>
+UPDATE table1 SET field1=new_value1 WHERE condition;
+UPDATE table1, table2 SET field1=new_value1, field2=new_value2, ... WHERE
+  table1.id1 = table2.id2 AND condition;
+  </pre>
+  <pre>
+CREATE DELETE MODIFY TABLE
+CREATE TABLE table (field1 type1, field2 type2);
+CREATE TABLE table (field1 type1, field2 type2, INDEX (field));
+CREATE TABLE table (field1 type1, field2 type2, PRIMARY KEY (field1));
+CREATE TABLE table (field1 type1, field2 type2, PRIMARY KEY (field1,field2));
+<br>
+<hr>
+EATE TABLE table1 (fk_field1 type1, field2 type2, ...,
+  FOREIGN KEY (fk_field1) REFERENCES table2 (t2_fieldA))
+    [ON UPDATE|ON DELETE] [CASCADE|SET NULL]
+<hr>
+CREATE TABLE table1 (fk_field1 type1, fk_field2 type2, ...,
+ FOREIGN KEY (fk_field1, fk_field2) REFERENCES table2 (t2_fieldA,t2_fieldB))
+ <hr>
+ CREATE TABLE table IF NOT EXISTS;
+ <hr>
+CREATE TEMPORARY TABLE table;
+<hr>
+<b> DROP </b>
+<hr>
+DROP TABLE table;
+DROP TABLE IF EXISTS table;<br>
+DROP TABLE table1, table2, ...
+<br><b>ALTER</b>
+ALTER TABLE table MODIFY field1 type1
+ALTER TABLE table MODIFY field1 type1 NOT NULL ...
+ALTER TABLE table CHANGE old_name_field1 new_name_field1 type1
+ALTER TABLE table CHANGE old_name_field1 new_name_field1 type1 NOT NULL ...
+ALTER TABLE table ALTER field1 SET DEFAULT ...
+ALTER TABLE table ALTER field1 DROP DEFAULT
+ALTER TABLE table ADD new_name_field1 type1
+ALTER TABLE table ADD new_name_field1 type1 FIRST
+ALTER TABLE table ADD new_name_field1 type1 AFTER another_field
+ALTER TABLE table DROP field1
+ALTER TABLE table ADD INDEX (field);
+<br>CHANGE FIELD ORDR
+<br>
+ALTER TABLE table MODIFY field1 type1 FIRST
+ALTER TABLE table MODIFY field1 type1 AFTER another_field
+ALTER TABLE table CHANGE old_name_field1 new_name_field1 type1 FIRST
+ALTER TABLE table CHANGE old_name_field1 new_name_field1 type1 AFTER
+  another_field
+</pre>
+KEY
+<br>
+<pre>
+CREATE TABLE table (..., PRIMARY KEY (field1, field2))
+CREATE TABLE table (..., FOREIGN KEY (field1, field2) REFERENCES table2
+(t2_field1, t2_field2))
+</pre>
+USERS AND PRIVILEDGE
+<pre>
+CREATE USER 'user'@'localhost';
+GRANT ALL PRIVILEGES ON base.* TO 'user'@'localhost' IDENTIFIED BY 'password';
+GRANT SELECT, INSERT, DELETE ON base.* TO 'user'@'localhost' IDENTIFIED BY 'password';
+REVOKE ALL PRIVILEGES ON base.* FROM 'user'@'host'; -- one permission only
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'user'@'host'; -- all permissions
+FLUSH PRIVILEGES;
+<hr>
+PASSWORD
+SET PASSWORD = PASSWORD('new_pass');
+SET PASSWORD FOR 'user'@'host' = PASSWORD('new_pass');
+SET PASSWORD = OLD_PASSWORD('new_pass');
+<hr>
+DROP USER 'user'@'host';
+</pre>
+host '%' means any host
+<br>
+MAIN DATA TYPES
+<pre>
+TINYINT (1o: -128 to +127)
+SMALLINT (2o: +-65 000)
+MEDIUMINT (3o: +-16 000 000)
+INT (4o: +- 2 000 000 000)
+BIGINT (8o: +-9.10^18)
+<hr>
+Precise interval: -(2^(8*N-1)) -> (2^8*N)-1
+⚠ INT(2) = “2 digits displayed” – NOT “number with 2 digits max”
+<hr>
+FLOAT(M,D)
+DOUBLE(M,D)
+FLOAT(D=0->53)
+⚠ 8,3 -> 12345,678 – NOT 12345678,123!
+<hr>
+TIME (HH:MM)
+YEAR (AAAA)
+DATE (AAAA-MM-JJ)
+DATETIME (AAAA-MM-JJ HH:MM; années 1000->9999)
+TIMESTAMP (like DATETIME, but 1970->2038, compatible with Unix)
+<hr>
+VARCHAR (single-line; explicit size)
+TEXT (multi-lines; max size=65535)
+BLOB (binary; max size=65535)
+Variants for TEXT&BLOB: TINY (max=255), MEDIUM (max=~16000), and LONG (max=4Go). Ex: VARCHAR(32), TINYTEXT, LONGBLOB, MEDIUMTEXT
+<hr>
+ENUM ('value1', 'value2', ...) -- (default NULL, or '' if NOT NULL)
+</pre>
+RESET ROOT PASSWORD
+<pre>
+$ /etc/init.d/mysql stop
+ <hr>
+$ mysqld_safe --skip-grant-tables
+<hr>
+$ mysql # on another terminal
+mysql> UPDATE mysql.user SET password=PASSWORD('new_pass') WHERE user='root';
+<hr>
+## Switch back to the mysqld_safe terminal and kill the process using Control + \
+$ /etc/init.d/mysql start
+</pre>
+<h2> MySQL Performance: How To Leverage MySQL Database Indexing </h2>
+<h3>WHAT IS INDEXING</h3>
+<li>Is a structure that can be used to get fastest response from common queries
+<li>smaller tablesare generated faster by generating small tables called <code>index</code> from a specified columnor set of columns.
+<li>a colum is called a <code>key</code> and can be used to enforce uniqueness.
+</li>
+<code>+------+----------+----------+<br/>
+|  ROW | COLUMN_1 | COLUMN_2 |<br/>
++------+----------+----------+<br/>
+|    1 |    data1 |    data2 |<br/>
++------+----------+----------+<br/>
+|    2 |    data1 |    data1 |<br/>
++------+----------+----------+<br/>
+|    3 |    data1 |    data1 |<br/>
++------+----------+----------+<br/>
+|    4 |    data1 |    data1 |<br/>
++------+----------+----------+<br/>
+|    5 |    data1 |    data1 |<br/>
++------+----------+----------+</code></p></div>
+<li> Queries utilizeindexes to identify and retrieve the target data even if they are a combination of keys
+<li>without index, the query will result in inspecting  every row to find the target data.
+<li>Indexing produce a fastest response for queries that use the indexed columns.
+</li>
+<h2> WHEN TO ENABLE INDEXING </h2>
+<li>Indexingif good when working with huge tables that has regular accessed data
+</li>
+<h2>WHAT TO INDEX</h2>
+<li>Columns that are used in WHERE clause
+<li>Columns that are used in ORDER BY clause
+</li>
+<h2>WHAT IS A UNIQUE INDEX</h2>
+<li>A unique index is an index that can be used to enforce uniqueness of a column or set of columns.
+<li> this is based on the configured index key
+<li>constraint will ensure that there are no duplicates entrys in the table based on configured key
+</li>
+<h2>WHAT IS A PRIMARY KEY INDEX</h2>
+<li>A primary key index is an index that can be used to enforce uniqueness of a column or set of columns.
+<li> pimary key is used yo optimize indexes and speed up queries.
+<li> primary key is used to uniquely identify a row in a table.
+<li>It helps to make sure that the desgnated PRIMARY KEY cannot be null
+</li>
+<h2>MANAGING INDEXES</h2>
+this include 
+  <li> <code>CREATING</code>
+  <li><code> DELETION</code>
+  <li> <code>LISTING</code>
+  </li>
+<h3>1 Listing/ Showing Indexes </h3>
+Tables can have more than one index<br>
+<b><em>SYNTAX USED:</em></b>
+<pre> SHOW INDEX FROM table_name</pre>
+<h3> 2 CREATING INDEXES </h3>
+<li>you determine the index where to enforce uniqueness when necessary
+<li>Indexes can be created when creating a table or after a table is created
+<li>Indexes can be created on a single column or multiple columns
+<li>Indexes can be created on a single column with a unique constraint or multiple columns with a unique constraint
+<li>
+EXAMPLE
+<b><em>SYNTAX: <br><strong> 1creating table with standard INDEX</strong></em></b>
+<pre>
+CREATE TABLE tableName (
+ID int,
+LName varchar(255),
+FName varchar(255),
+DOB varchar(255),
+LOC varchar(255),
+INDEX ( ID )
+);
+</pre>
+<hr>
+ <strong> 2 Create a Table with Unique Index & Primary Key</strong>
+ <pre>
+ CREATE TABLE tableName (
+ID int,
+LName varchar(255),
+FName varchar(255),
+DOB varchar(255),
+LOC varchar(255),
+PRIMARY KEY (ID),
+UNIQUE INDEX ( ID )
+);
+</pre>
+<hr>
+ <strong> Add an Index to Existing Table</strong>
+ <pre>
+ CREATE INDEX indexName ON tableName (ID, LName, FName, LOC);
+ </pre>
+ <hr>
+ <strong>Add an Index to Existing Table with Primary Key</strong>
+<pre>
+CREATE UNIQUE INDEX indexName ON tableName (ID, LName, FName, LOC);
+</pre>
+<hr>
+<h3>  DELETING INDEXES </h3>
+<li>Indexes can be deleted when a table is dropped or after a table is created
+<pre>
+DROP INDEX indexName ON tableName;
+</pre>
 </body>
 </html>
