@@ -1,24 +1,13 @@
--- Procedure to compute and store the average weighted score for all users
+-- avarage
 DELIMITER //
 CREATE PROCEDURE ComputeAverageWeightedScoreForUsers()
 BEGIN
-    DECLARE user_id INT;
-    
-    -- Loop through each user
-    DECLARE user_cursor CURSOR FOR SELECT id FROM users;
-    OPEN user_cursor;
-    
-    user_loop: LOOP
-        FETCH user_cursor INTO user_id;
-        IF user_id IS NULL THEN
-            LEAVE user_loop;
-        END IF;
-
-        -- Call the procedure for individual user
-        CALL ComputeAverageWeightedScoreForUser(user_id);
-    END LOOP;
-
-    CLOSE user_cursor;
+    UPDATE users
+    SET average_score = (
+        SELECT SUM(corrections.score * projects.weight) / SUM(projects.weight)
+        FROM corrections
+        JOIN projects ON corrections.project_id = projects.id
+        WHERE corrections.user_id = users.id
+    );
 END //
 DELIMITER ;
-
