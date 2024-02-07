@@ -1,0 +1,2 @@
+// lists all docs in school db is passed as option of mongo
+echo "db.school.find()" | mongo my_db

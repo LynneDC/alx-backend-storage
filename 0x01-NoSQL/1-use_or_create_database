@@ -1,0 +1,2 @@
+// a scriptthat creates or uses a database my_db
+echo "use my_db" | mongo

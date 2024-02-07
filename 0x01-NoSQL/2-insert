@@ -1,0 +1,2 @@
+// inserts a document in a collection
+echo 'db.school.insert({"name": "Holberton school"})' | mongo my_db

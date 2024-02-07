@@ -1,0 +1,2 @@
+// list all docs with same name in school
+echo "db.school.find().count()" | mongo my_db

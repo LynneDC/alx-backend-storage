@@ -1,0 +1,2 @@
+// script that list all docs with name starting by holberton in school
+mongo my_db --quiet --eval 'db.shool.find({"name": /^holberton})'

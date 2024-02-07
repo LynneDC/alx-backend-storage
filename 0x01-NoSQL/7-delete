@@ -1,0 +1,2 @@
+// delets all docs with same name in school collection
+echo "db.school.deleteMany({name: 'Holberton school'})" | mongo my_db

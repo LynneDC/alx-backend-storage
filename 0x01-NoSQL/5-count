@@ -1,0 +1,2 @@
+// display the number of docs in school
+echo "db.school.find().count()" | mongo my_db
