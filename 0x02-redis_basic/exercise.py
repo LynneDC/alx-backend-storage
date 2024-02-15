@@ -100,4 +100,3 @@ class Cache:
         '''Retrieves an integer value from a Redis data storage.
         '''
         return self.get(key, lambda x: int(x))
-    
